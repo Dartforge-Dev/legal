@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — DartForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #161920;
+      --border: #252830;
+      --accent: #f5a623;
+      --accent-dim: rgba(245,166,35,0.12);
+      --text: #e8eaf0;
+      --text-muted: #7a7f8e;
+      --text-dim: #4a4f5e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      background: rgba(13,15,20,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-inner {
+      width: 18px;
+      height: 18px;
+      background: var(--bg);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    }
+
+    .logo-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 64px 24px 48px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(40px, 8vw, 64px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero-meta {
+      color: var(--text-muted);
+      font-size: 14px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span::before {
+      content: '·';
+      margin-right: 8px;
+      color: var(--text-dim);
+    }
+
+    .hero-meta span:first-child::before { content: none; }
+
+    /* Main content */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .intro-card {
+      background: var(--accent-dim);
+      border: 1px solid rgba(245,166,35,0.25);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .intro-card strong { color: var(--accent); }
+
+    section {
+      margin-bottom: 48px;
+    }
+
+    .section-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p {
+      color: #c4c8d4;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 14px 0;
+    }
+
+    ul li {
+      color: #c4c8d4;
+      font-size: 15px;
+      padding: 6px 0 6px 20px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 9px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 10px 12px;
+      color: #c4c8d4;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table tr:nth-child(even) td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,166,35,0.3);
+      transition: border-color 0.2s;
+    }
+
+    a:hover { border-bottom-color: var(--accent); }
+
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 16px;
+    }
+
+    .contact-block p {
+      margin-bottom: 8px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .data-table { font-size: 13px; }
+      .data-table th, .data-table td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark"><div class="logo-inner"></div></div>
+  <div class="logo-text">DART<span>FORGE</span></div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <div class="hero-meta">
+    <span>Effective: 19 April 2026</span>
+    <span>Last updated: 19 April 2026</span>
+    <span>DartForge — Anton Baken</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="intro-card">
+    <strong>The short version:</strong> DartForge collects only what it needs to run the app — your account details, match statistics, and app preferences. We don't sell your data, share it with advertisers, or use it for anything other than running DartForge.
+  </div>
+
+  <section>
+    <div class="section-number">01</div>
+    <h2>Who We Are</h2>
+    <p>DartForge is developed and operated by Anton Baken, an independent developer based in New Zealand. References to "we", "us", or "our" in this policy refer to Anton Baken operating as DartForge.</p>
+    <p>If you have any questions about this policy, you can contact us at <a href="mailto:abaken87@gmail.com">abaken87@gmail.com</a>.</p>
+  </section>
+
+  <section>
+    <div class="section-number">02</div>
+    <h2>What Data We Collect</h2>
+    <p>We collect the minimum data necessary to provide DartForge's features.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Why we collect it</th>
+          <th>Stored where</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Google account email and display name</td>
+          <td>Account creation and authentication via Google Sign-In</td>
+          <td>Firebase Authentication (Google)</td>
+        </tr>
+        <tr>
+          <td>Player profile (display name, avatar, friend code)</td>
+          <td>Personalisation and social features</td>
+          <td>Firebase Firestore (Google)</td>
+        </tr>
+        <tr>
+          <td>Match statistics (scores, averages, checkouts)</td>
+          <td>Stats tracking, leaderboards, ranked progression</td>
+          <td>Firebase Firestore + local device storage (Room)</td>
+        </tr>
+        <tr>
+          <td>Ranked rating (DR, tier, season history)</td>
+          <td>Matchmaking and competitive ladder</td>
+          <td>Firebase Firestore (Google)</td>
+        </tr>
+        <tr>
+          <td>XP, badges, and cosmetic entitlements</td>
+          <td>Progression system and purchased item ownership</td>
+          <td>Firebase Firestore (Google)</td>
+        </tr>
+        <tr>
+          <td>Purchase tokens (via Google Play Billing)</td>
+          <td>Verifying Pro and subscription purchases</td>
+          <td>Firebase Firestore (Google) — token only, no payment details</td>
+        </tr>
+        <tr>
+          <td>Region (e.g. NZ, AU)</td>
+          <td>Matchmaking — finding nearby opponents</td>
+          <td>Firebase Firestore (Google)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>We do <span class="highlight">not</span> collect: precise location, contacts, camera or microphone data, device identifiers beyond what Firebase SDK provides, or any payment card details (all payments are handled entirely by Google Play).</p>
+  </section>
+
+  <section>
+    <div class="section-number">03</div>
+    <h2>How We Use Your Data</h2>
+    <ul>
+      <li>Running the app — match scoring, stats calculation, ranked progression, and leaderboards</li>
+      <li>Matchmaking — pairing you with opponents of similar skill in your region</li>
+      <li>Cloud sync — keeping your stats and progress consistent across your devices</li>
+      <li>Verifying purchases — confirming Pro and subscription entitlements via Google Play</li>
+      <li>Seasonal resets — applying end-of-season rank changes and XP payouts</li>
+    </ul>
+    <p>We do not use your data for advertising, profiling, or any purpose unrelated to operating DartForge.</p>
+  </section>
+
+  <section>
+    <div class="section-number">04</div>
+    <h2>Third-Party Services</h2>
+    <p>DartForge uses the following Google services, each governed by Google's own privacy policy:</p>
+    <ul>
+      <li><strong>Firebase Authentication</strong> — handles Google Sign-In. Google's authentication infrastructure processes your credentials. We receive a user ID and basic profile info.</li>
+      <li><strong>Firebase Firestore</strong> — cloud database where player profiles, match data, and rankings are stored.</li>
+      <li><strong>Firebase Cloud Functions</strong> — server-side logic for matchmaking, turn validation, purchase verification, and ranked updates. These run on Google Cloud infrastructure.</li>
+      <li><strong>Google Play Billing</strong> — handles all payment processing for Pro purchases and subscriptions. We never see your payment details — only a purchase token to verify entitlement.</li>
+    </ul>
+    <p>Google's privacy policy applies to these services: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p>
+  </section>
+
+  <section>
+    <div class="section-number">05</div>
+    <h2>Data Storage and Security</h2>
+    <p>Your data is stored on Google Cloud infrastructure, primarily in the <span class="highlight">us-central1</span> region. Firebase Firestore applies access rules that prevent any user from reading or modifying another user's private data.</p>
+    <p>Match statistics are also stored locally on your device using Room (Android's local database). This local data is not accessible to other apps.</p>
+    <p>We do not operate our own servers. All backend infrastructure is provided by Google Firebase and Google Cloud.</p>
+  </section>
+
+  <section>
+    <div class="section-number">06</div>
+    <h2>Data Retention</h2>
+    <p>Your data is retained for as long as your account exists. If you delete the app without signing out, your cloud data remains stored in Firestore unless you request deletion.</p>
+    <p>To request deletion of your account and all associated data, contact us at <a href="mailto:abaken87@gmail.com">abaken87@gmail.com</a> with the subject line "Data Deletion Request". We will process the request within 30 days.</p>
+  </section>
+
+  <section>
+    <div class="section-number">07</div>
+    <h2>Your Rights</h2>
+    <p>Depending on where you live, you may have rights regarding your personal data including the right to access, correct, or delete it. To exercise any of these rights, contact us at the address below.</p>
+    <p>For users in the European Economic Area or United Kingdom, we process your data on the basis of legitimate interests (operating the app you have installed) and contractual necessity (fulfilling purchases you have made).</p>
+  </section>
+
+  <section>
+    <div class="section-number">08</div>
+    <h2>Children</h2>
+    <p>DartForge is not directed at children under 13. We do not knowingly collect personal data from children under 13. If you believe a child under 13 has provided us with personal information, please contact us and we will delete it promptly.</p>
+  </section>
+
+  <section>
+    <div class="section-number">09</div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this privacy policy from time to time. When we do, we will update the "Last updated" date at the top of this page. For significant changes, we will notify users via an in-app notice.</p>
+  </section>
+
+  <section>
+    <div class="section-number">10</div>
+    <h2>Contact</h2>
+    <div class="contact-block">
+      <p><strong>Anton Baken</strong></p>
+      <p>DartForge — Independent Developer</p>
+      <p>New Zealand</p>
+      <p><a href="mailto:abaken87@gmail.com">abaken87@gmail.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Anton Baken · DartForge · New Zealand
+</footer>
+
+</body>
+</html>
