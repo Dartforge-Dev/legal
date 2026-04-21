@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Account — DartForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #161920;
+      --border: #252830;
+      --accent: #f5a623;
+      --accent-dim: rgba(245,166,35,0.12);
+      --text: #e8eaf0;
+      --text-muted: #7a7f8e;
+      --text-dim: #4a4f5e;
+      --danger: #e05555;
+      --danger-dim: rgba(224,85,85,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      background: rgba(13,15,20,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-inner {
+      width: 18px;
+      height: 18px;
+      background: var(--bg);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    }
+
+    .logo-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    .hero {
+      padding: 64px 24px 48px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(40px, 8vw, 64px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero-meta {
+      color: var(--text-muted);
+      font-size: 14px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span::before {
+      content: '·';
+      margin-right: 8px;
+      color: var(--text-dim);
+    }
+
+    .hero-meta span:first-child::before { content: none; }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .intro-card {
+      background: var(--accent-dim);
+      border: 1px solid rgba(245,166,35,0.25);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .intro-card strong { color: var(--accent); }
+
+    .warning-card {
+      background: var(--danger-dim);
+      border: 1px solid rgba(224,85,85,0.25);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .warning-card strong { color: var(--danger); }
+
+    section {
+      margin-bottom: 48px;
+    }
+
+    .section-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p {
+      color: #c4c8d4;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 14px 0;
+    }
+
+    ul li {
+      color: #c4c8d4;
+      font-size: 15px;
+      padding: 6px 0 6px 20px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 9px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,166,35,0.3);
+      transition: border-color 0.2s;
+    }
+
+    a:hover { border-bottom-color: var(--accent); }
+
+    .highlight { color: var(--accent); font-weight: 600; }
+    .danger { color: var(--danger); font-weight: 600; }
+
+    /* Form */
+    .form-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      margin-top: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group:last-of-type {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7f8e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    select option {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--danger-dim);
+      border: 1px solid rgba(224,85,85,0.2);
+      border-radius: 6px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--danger);
+      cursor: pointer;
+    }
+
+    .checkbox-group p {
+      margin: 0;
+      font-size: 14px;
+      color: #c4c8d4;
+    }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      padding: 14px 28px;
+      background: var(--danger);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .success-card {
+      display: none;
+      background: rgba(80,200,120,0.10);
+      border: 1px solid rgba(80,200,120,0.25);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .success-card .success-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .success-card p {
+      color: #80d4a0;
+      margin: 0;
+    }
+
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 16px;
+    }
+
+    .contact-block p { margin-bottom: 8px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      border-bottom-color: transparent;
+    }
+
+    @media (max-width: 600px) {
+      .form-block { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark"><div class="logo-inner"></div></div>
+  <div class="logo-text">DART<span>FORGE</span></div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Account</div>
+  <h1>Delete Account</h1>
+  <div class="hero-meta">
+    <span>DartForge — Anton Baken</span>
+    <span>Processed within 30 days</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="intro-card">
+    <strong>Your right to deletion:</strong> You can request deletion of your DartForge account and all associated data at any time. Once processed, this action is permanent and cannot be undone.
+  </div>
+
+  <section>
+    <div class="section-number">01</div>
+    <h2>What Gets Deleted</h2>
+    <p>Submitting this request will permanently delete the following data associated with your account:</p>
+    <ul>
+      <li>Your player profile — display name, avatar, friend code, and region</li>
+      <li>All match statistics — scores, averages, checkouts, and lifetime history</li>
+      <li>Ranked progression — DR rating, tier, season history, and placement records</li>
+      <li>XP, badges, and level progress</li>
+      <li>Purchased cosmetic entitlements — voice packs, board skins (see note below)</li>
+      <li>Your Firebase Authentication account</li>
+    </ul>
+
+    <div class="warning-card" style="margin-top: 20px;">
+      <strong>⚠ Note on purchases:</strong> Deleting your account will remove your entitlement records from DartForge. Google Play purchase records are managed by Google and are not deleted by us. Pro unlocks and cosmetic IAP purchases cannot be refunded through this process — contact Google Play support for refund requests.
+    </div>
+  </section>
+
+  <section>
+    <div class="section-number">02</div>
+    <h2>Submit Your Request</h2>
+    <p>Fill in the form below. We will process your request within 30 days and send a confirmation to the email address provided.</p>
+
+    <div class="form-block">
+      <form id="deleteForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID" method="POST">
+
+        <div class="form-group">
+          <label for="email">Email address linked to your Google account *</label>
+          <input type="email" id="email" name="email" placeholder="yourname@gmail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="displayName">In-app display name (optional)</label>
+          <input type="text" id="displayName" name="displayName" placeholder="Your DartForge display name">
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason for deletion (optional)</label>
+          <select id="reason" name="reason">
+            <option value="" disabled selected>Select a reason</option>
+            <option value="no_longer_playing">No longer playing darts</option>
+            <option value="switching_app">Switching to a different app</option>
+            <option value="privacy">Privacy concerns</option>
+            <option value="technical">Technical issues</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Anything else you'd like us to know"></textarea>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="confirm" name="confirm" required>
+          <p>I understand that deleting my account is <span class="danger">permanent and irreversible</span>. All my stats, progression, and profile data will be permanently deleted.</p>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Request Account Deletion
+        </button>
+
+        <div class="success-card" id="successCard">
+          <div class="success-icon">✓</div>
+          <p>Your deletion request has been received. We will process it within 30 days and send a confirmation to your email address.</p>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-number">03</div>
+    <h2>Prefer to Email Us?</h2>
+    <p>If you'd rather contact us directly, send an email with the subject line <span class="highlight">"Data Deletion Request"</span> and include the email address linked to your DartForge account.</p>
+    <div class="contact-block">
+      <p><strong>Anton Baken</strong></p>
+      <p>DartForge — Independent Developer</p>
+      <p>New Zealand</p>
+      <p><a href="mailto:abaken87@gmail.com?subject=Data%20Deletion%20Request">abaken87@gmail.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Anton Baken · DartForge · New Zealand ·
+  <a href="./privacy-policy.html">Privacy Policy</a>
+</footer>
+
+<script>
+  const form = document.getElementById('deleteForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successCard = document.getElementById('successCard');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        successCard.style.display = 'block';
+        submitBtn.style.display = 'none';
+        successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request Account Deletion';
+        alert('Something went wrong. Please email abaken87@gmail.com directly.');
+      }
+    } catch {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request Account Deletion';
+      alert('Something went wrong. Please email abaken87@gmail.com directly.');
+    }
+  });
+</script>
+
+</body>
+</html>
