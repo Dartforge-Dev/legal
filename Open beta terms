@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Beta — Free Online Play · DartForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #161920;
+      --border: #252830;
+      --accent: #f5a623;
+      --accent-dim: rgba(245,166,35,0.12);
+      --green: #2ecc71;
+      --green-dim: rgba(46,204,113,0.12);
+      --green-border: rgba(46,204,113,0.25);
+      --text: #e8eaf0;
+      --text-muted: #7a7f8e;
+      --text-dim: #4a4f5e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 14px;
+      position: sticky; top: 0;
+      background: rgba(13,15,20,0.95);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .header-logo { height: 32px; width: auto; }
+    .logo-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; letter-spacing: 0.04em; color: var(--text);
+    }
+    .logo-text span { color: var(--accent); }
+
+    /* ── HERO BANNER ── */
+    .hero-banner-wrap {
+      max-width: 760px; margin: 32px auto 0; padding: 0 24px;
+    }
+    .hero-banner {
+      width: 100%; display: block; border-radius: 12px;
+      height: auto;
+    }
+
+    /* ── HERO TEXT ── */
+    .hero {
+      max-width: 760px; margin: 0 auto;
+      padding: 40px 24px 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.15em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 8vw, 58px);
+      font-weight: 800; line-height: 1.05; letter-spacing: 0.02em; margin-bottom: 14px;
+    }
+    .hero h1 .free { color: var(--accent); text-shadow: 0 0 40px rgba(245,166,35,0.35); }
+    .hero-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 20px; max-width: 520px; }
+
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px;
+    }
+    .badge-green { background: var(--green-dim); border: 1px solid var(--green-border); color: var(--green); }
+    .badge-gold  { background: var(--accent-dim); border: 1px solid rgba(245,166,35,0.3); color: var(--accent); }
+    .badge-dim   { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); }
+
+    .hero-meta { color: var(--text-muted); font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .hero-meta span::before { content: '·'; margin-right: 8px; color: var(--text-dim); }
+    .hero-meta span:first-child::before { content: none; }
+
+    /* ── MAIN ── */
+    main { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── INTRO CARD ── */
+    .intro-card {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: 8px; padding: 20px 24px; margin: 40px 0 48px;
+      font-size: 15px; color: var(--text);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .intro-card .icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .intro-card strong { color: var(--green); }
+
+    /* ── PRICING CARDS ── */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0 40px; }
+    @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+    .price-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px; position: relative; overflow: hidden;
+    }
+    .price-card.featured {
+      border-color: rgba(245,166,35,0.4);
+      background: linear-gradient(135deg, #161920 0%, #1c1a12 100%);
+    }
+    .price-card.featured::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .price-card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .price-card-label.active { color: var(--green); }
+    .price-card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px;
+    }
+    .price-card-amount {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 4px;
+    }
+    .price-card-amount.free-price { color: var(--green); }
+    .price-card-period { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .price-card-features { list-style: none; border-top: 1px solid var(--border); padding-top: 14px; }
+    .price-card-features li { font-size: 13px; color: #c4c8d4; padding: 4px 0 4px 18px; position: relative; }
+    .price-card-features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 11px; top: 6px; font-weight: 700; }
+
+    /* ── SECTIONS ── */
+    section { margin-bottom: 48px; }
+    .section-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px;
+    }
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800; letter-spacing: 0.03em;
+      color: var(--text); margin-bottom: 16px;
+      padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    p { color: #c4c8d4; margin-bottom: 14px; font-size: 15px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul { list-style: none; margin: 14px 0; }
+    ul li {
+      color: #c4c8d4; font-size: 15px;
+      padding: 6px 0 6px 20px; position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    ul li:last-child { border-bottom: none; }
+    ul li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 9px; }
+
+    /* ── DATA TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    .data-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); text-align: left; padding: 10px 12px;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .data-table td { padding: 10px 12px; color: #c4c8d4; border: 1px solid var(--border); vertical-align: top; }
+    .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-radius: 8px; padding: 18px 22px; margin: 20px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .callout-warn { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); }
+    .callout-info { background: rgba(99,130,255,0.08); border: 1px solid rgba(99,130,255,0.2); }
+    .callout .icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .callout p { margin: 0; color: #c4c8d4; font-size: 14px; }
+    .callout strong { color: var(--accent); }
+    .callout-info strong { color: #8fa8ff; }
+
+    /* ── TIMELINE ── */
+    .timeline { margin: 20px 0; }
+    .timeline-item { display: flex; gap: 16px; padding-bottom: 28px; position: relative; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item:not(:last-child)::after {
+      content: ''; position: absolute; left: 15px; top: 32px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-dot {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 800; position: relative; z-index: 1;
+    }
+    .dot-active { background: var(--green-dim); border: 2px solid var(--green); color: var(--green); }
+    .dot-future { background: var(--surface); border: 2px solid var(--border); color: var(--text-dim); }
+    .timeline-content { padding-top: 4px; }
+    .timeline-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px;
+    }
+    .timeline-title.active { color: var(--green); }
+    .timeline-desc { font-size: 14px; color: var(--text-muted); }
+
+    .highlight       { color: var(--accent); font-weight: 600; }
+    .highlight-green { color: var(--green);  font-weight: 600; }
+
+    .contact-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 24px; margin-top: 16px;
+    }
+    .contact-block p { margin-bottom: 8px; }
+
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(245,166,35,0.3); transition: border-color 0.2s; }
+    a:hover { border-bottom-color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 24px;
+      text-align: center; color: var(--text-dim); font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .data-table { font-size: 13px; }
+      .data-table th, .data-table td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <img class="header-logo" src="https://raw.githubusercontent.com/Dartforge-Dev/assets/main/email/ic_dartforge_logoshort.png" alt="DartForge">
+</header>
+
+<!-- HERO BANNER -->
+<div class="hero-banner-wrap">
+  <img
+    class="hero-banner"
+    src="https://raw.githubusercontent.com/Dartforge-Dev/assets/main/email/ic_beta_online_promo.png"
+    alt="DartForge Pro Free During Open Beta"
+  >
+</div>
+
+<!-- HERO TEXT -->
+<div class="hero">
+  <div class="hero-label">Open Beta · Season 0</div>
+  <h1>Online Play is<br><span class="free">Free Right Now</span></h1>
+  <p class="hero-sub">DartForge ranked multiplayer is free for all players during the open beta period. No subscription required — just download, sign in, and play.</p>
+  <div class="badge-row">
+    <span class="badge badge-green">● Season 0 Active</span>
+    <span class="badge badge-gold">Free Online Play</span>
+    <span class="badge badge-dim">Ends August 2026</span>
+  </div>
+  <div class="hero-meta">
+    <span>Effective: 11 May 2026</span>
+    <span>DartForge — Anton Baken</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="intro-card">
+    <div class="icon">🎯</div>
+    <div>
+      <strong>The short version:</strong> During Season 0 (the open beta), ranked online multiplayer is completely free for every player. When Season 1 launches, a subscription will be required to continue playing online. You will receive at least two weeks notice before that happens.
+    </div>
+  </div>
+
+  <!-- 01 PRICING -->
+  <section>
+    <div class="section-number">01</div>
+    <h2>What's Free Now vs What Changes</h2>
+    <p>DartForge has three tiers. During the beta, online ranked play is unlocked for everyone at no cost. When Season 1 launches, it moves behind a subscription. Everything else stays the same.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card featured">
+        <div class="price-card-label active">● Now — Season 0 Beta</div>
+        <div class="price-card-name">Online Ranked</div>
+        <div class="price-card-amount free-price">FREE</div>
+        <div class="price-card-period">During open beta · No card required</div>
+        <ul class="price-card-features">
+          <li>Ranked multiplayer matches</li>
+          <li>DR ladder &amp; tier progression</li>
+          <li>Online leaderboards</li>
+          <li>Season 0 cosmetics</li>
+          <li>Loss protection shields</li>
+          <li>Full Pro features included</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-card-label">Season 1 onwards</div>
+        <div class="price-card-name">Online Ranked</div>
+        <div class="price-card-amount">$4.99</div>
+        <div class="price-card-period">per month NZD · or $34.99/yr (save 42%)</div>
+        <ul class="price-card-features">
+          <li>Ranked multiplayer matches</li>
+          <li>DR ladder &amp; tier progression</li>
+          <li>Online leaderboards</li>
+          <li>Season cosmetics (active while subscribed)</li>
+          <li>Loss protection shields</li>
+          <li>Full Pro features included</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free</th>
+          <th>Pro — $9.99 NZD one-time</th>
+          <th>Online Sub — includes Pro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Local X01 &amp; Cricket scoring</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>XP system &amp; badges</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>Live match stats</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>Last 5 match history</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>Full training suite (Bob's 27, ATW, Cricket, X01 Training)</td>
+          <td>—</td>
+          <td class="highlight">✓</td>
+          <td class="highlight-green">✓ Included</td>
+        </tr>
+        <tr>
+          <td>Lifetime stats &amp; full match history</td>
+          <td>—</td>
+          <td class="highlight">✓</td>
+          <td class="highlight-green">✓ Included</td>
+        </tr>
+        <tr>
+          <td>Cloud sync across devices</td>
+          <td>—</td>
+          <td class="highlight">✓</td>
+          <td class="highlight-green">✓ Included</td>
+        </tr>
+        <tr>
+          <td>QR profile share &amp; import</td>
+          <td>—</td>
+          <td class="highlight">✓</td>
+          <td class="highlight-green">✓ Included</td>
+        </tr>
+        <tr>
+          <td>Ranked online multiplayer</td>
+          <td class="highlight-green">✓ Free during beta</td>
+          <td>30-day trial</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>Online leaderboards</td>
+          <td class="highlight-green">✓ Free during beta</td>
+          <td>—</td>
+          <td class="highlight-green">✓</td>
+        </tr>
+        <tr>
+          <td>Season cosmetics</td>
+          <td>—</td>
+          <td>—</td>
+          <td class="highlight-green">✓ Active while subscribed</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 02 TIMELINE -->
+  <section>
+    <div class="section-number">02</div>
+    <h2>Beta to Season 1 Timeline</h2>
+    <p>Here's how the transition from free beta to paid Season 1 works.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot dot-active">0</div>
+        <div class="timeline-content">
+          <div class="timeline-title active">Season 0 — Open Beta (Now)</div>
+          <div class="timeline-desc">Ranked online play is free for all players. The DR ladder is live. Your rank, wins, losses, and season history are all recorded for real. Season 0 counts.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot dot-future">!</div>
+        <div class="timeline-content">
+          <div class="timeline-title">2-Week Notice Period</div>
+          <div class="timeline-desc">At least two weeks before Season 1 launches, you will see an in-app notice. The exact date will be clearly communicated before anything changes.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot dot-future">1</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Season Reset</div>
+          <div class="timeline-desc">DRs partially reset based on your final tier. Bronze and Silver keep their DR. Gold and above reset to their tier's entry point. Everyone receives 3 loss protection shields. Top 3 players on the leaderboard receive XP rewards.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot dot-future">$</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Season 1 — Subscription Required</div>
+          <div class="timeline-desc">Online ranked play requires a subscription ($4.99/mo or $34.99/yr NZD). The subscription includes all Pro features. Pro users get a 30-day free online trial automatically. Local scoring, XP, and free features continue working for everyone.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 TERMS -->
+  <section>
+    <div class="section-number">03</div>
+    <h2>Open Beta Terms &amp; Conditions</h2>
+    <p>By playing DartForge during the open beta period (Season 0), you agree to the following terms.</p>
+
+    <div class="callout callout-warn">
+      <div class="icon">⚠️</div>
+      <div><p><strong>Beta software notice:</strong> DartForge is currently in open beta. Features may change, be added, or removed. While we aim for a stable experience, occasional bugs or unexpected behaviour may occur. Your feedback helps us improve.</p></div>
+    </div>
+
+    <ul>
+      <li>Online ranked play is provided free of charge during Season 0 only. This is a time-limited offer and will end when Season 1 launches.</li>
+      <li>The free online beta period may end earlier than planned if required for technical, operational, or business reasons. You will receive at least 14 days notice before any change to access.</li>
+      <li>Your Season 0 rank, DR, match history, and XP are real and will carry forward (subject to the season reset rules) into Season 1 and beyond.</li>
+      <li>DartForge reserves the right to suspend or remove online access for any account found to be abusing the matchmaking system, abandoning matches repeatedly, or engaging in unsportsmanlike conduct.</li>
+      <li>The beta period does not entitle you to any continued free access after Season 0 ends. A subscription will be required for online play from Season 1 onwards.</li>
+      <li>All in-app purchases made during the beta (Pro unlock) are real transactions charged to your Google Play account and are not refundable except as required by Google Play policy.</li>
+      <li>Season 0 cosmetics earned during the beta period will be retained in your account.</li>
+      <li>DartForge is provided "as is" during the beta. To the maximum extent permitted by applicable law, we make no warranties about uptime, data integrity, or fitness for purpose during the beta period.</li>
+    </ul>
+  </section>
+
+  <!-- 04 DR RESET -->
+  <section>
+    <div class="section-number">04</div>
+    <h2>Season Reset Rules</h2>
+    <p>At the end of Season 0, DRs partially reset based on your final tier. The reset keeps the ladder competitive while rewarding players who climbed higher.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Your Final Tier at Season End</th>
+          <th>Resets To</th>
+          <th>New DR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Bronze I / II / III</td><td>No change</td><td>Unchanged</td></tr>
+        <tr><td>Silver I / II / III</td><td>No change</td><td>Unchanged</td></tr>
+        <tr><td>Gold I / II / III</td><td>Gold I</td><td>1,200</td></tr>
+        <tr><td>Platinum I / II / III</td><td>Platinum I</td><td>1,850</td></tr>
+        <tr><td>Diamond I / II / III</td><td>Diamond I</td><td>2,700</td></tr>
+        <tr><td>Crimson I / II / III</td><td>Diamond I</td><td>2,700</td></tr>
+        <tr><td>Iridescent</td><td>Crimson I</td><td>3,700</td></tr>
+        <tr><td>Still in placements</td><td>Unranked</td><td>1,000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info">
+      <div class="icon">ℹ️</div>
+      <div><p><strong>Everyone also receives:</strong> 3 loss protection shields at the start of each new season, a cleared daily shield carry-over, and their peak tier recorded permanently in their season history.</p></div>
+    </div>
+
+    <p>The top 3 players on the Season 0 leaderboard receive XP rewards: <span class="highlight">15,000 XP</span> (1st), <span class="highlight">10,000 XP</span> (2nd), and <span class="highlight">7,500 XP</span> (3rd). These are awarded when you next open the Online screen after the reset.</p>
+  </section>
+
+  <!-- 05 SUBSCRIPTION -->
+  <section>
+    <div class="section-number">05</div>
+    <h2>Subscription Details (Season 1 Onwards)</h2>
+    <p>When Season 1 launches, a subscription is required for ranked online multiplayer. The subscription includes all Pro features — you do not need to purchase Pro separately. All billing is handled entirely by Google Play.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Price (NZD)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monthly</td>
+          <td class="highlight">$4.99 / month</td>
+          <td>Cancel any time via Google Play · Includes all Pro features</td>
+        </tr>
+        <tr>
+          <td>Annual</td>
+          <td class="highlight">$34.99 / year</td>
+          <td>Save 42% vs monthly · Recommended · Includes all Pro features</td>
+        </tr>
+        <tr>
+          <td>Pro → Online trial</td>
+          <td class="highlight-green">30 days free</td>
+          <td>Automatic with Pro purchase ($9.99 one-time)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li>Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current billing period.</li>
+      <li>Cancellation can be made at any time through your Google Play account. Access continues until the end of the paid period.</li>
+      <li>Season cosmetics are active while your subscription is valid. If your subscription lapses, season cosmetics are hidden but not deleted — they return if you resubscribe.</li>
+      <li>Subscription prices are in NZD and may vary by region as determined by Google Play's local pricing.</li>
+      <li>DartForge does not offer refunds for subscriptions beyond what is required by Google Play policy and applicable consumer law.</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="icon">💡</div>
+      <div><p><strong>Already bought Pro?</strong> You get a 30-day free trial of online ranked play automatically. After the trial, a subscription is required to continue. Your Pro purchase is never lost — when you subscribe, you already have everything included.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 FAQ -->
+  <section>
+    <div class="section-number">06</div>
+    <h2>Common Questions</h2>
+    <ul>
+      <li><strong>Does my Season 0 rank count for real?</strong> Yes. Your DR, wins, losses, and season history from Season 0 are permanent records.</li>
+      <li><strong>Will I lose my progress if I don't subscribe at Season 1?</strong> No. Your account, XP, and badges are all retained. You just won't be able to play ranked online until you subscribe.</li>
+      <li><strong>Can I still use DartForge for free after Season 0?</strong> Yes. Local X01 and Cricket scoring, the XP system, badges, and live match stats are free forever.</li>
+      <li><strong>Does the subscription include Pro features?</strong> Yes. An active subscription gives you full access to everything — training suite, lifetime stats, cloud sync, QR share, and ranked online play. You don't need to buy Pro separately.</li>
+      <li><strong>How will I know when Season 1 is starting?</strong> You will see an in-app banner at least two weeks before the change. We will not flip the switch without clear advance notice.</li>
+      <li><strong>I already bought Pro — do I need a subscription for online?</strong> Pro gives you a 30-day free trial of online play. After that, yes — a subscription is required. The subscription also includes all Pro features so there's no overlap in cost if you subscribe.</li>
+    </ul>
+  </section>
+
+  <!-- 07 CONTACT -->
+  <section>
+    <div class="section-number">07</div>
+    <h2>Contact</h2>
+    <p>Questions about the beta, your account, or anything else — get in touch.</p>
+    <div class="contact-block">
+      <p><strong>Anton Baken</strong></p>
+      <p>DartForge — Independent Developer</p>
+      <p>New Zealand</p>
+      <p><a href="mailto:abaken87@gmail.com">abaken87@gmail.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Anton Baken · DartForge · New Zealand · <a href="privacy-policy.html">Privacy Policy</a>
+</footer>
+
+</body>
+</html>
